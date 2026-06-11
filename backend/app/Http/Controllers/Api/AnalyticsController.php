@@ -34,8 +34,11 @@ class AnalyticsController extends Controller
 
         $programCounts = [];
         foreach ($latestPerSession as $c) {
-            foreach ($c->recommended_program_ids ?? [] as $pid) {
-                $programCounts[$pid] = ($programCounts[$pid] ?? 0) + 1;
+            // Only count the primary (first) recommended programme — the student's top match
+            $ids = $c->recommended_program_ids ?? [];
+            if (!empty($ids)) {
+                $primary = $ids[0];
+                $programCounts[$primary] = ($programCounts[$primary] ?? 0) + 1;
             }
         }
 
@@ -150,9 +153,4 @@ class AnalyticsController extends Controller
     {
         $password = $request->input('password');
         $expected = config('app.admin_password', 'admin123');
-        if ($password === $expected) {
-            return response()->json(['success' => true]);
-        }
-        return response()->json(['error' => 'Invalid password'], 401);
-    }
-}
+        if ($password === 
