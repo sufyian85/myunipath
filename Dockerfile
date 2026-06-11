@@ -35,5 +35,5 @@ RUN apt-get update && apt-get install -y \
 
                                                                                                 EXPOSE 8000
 
-                                                                                                CMD bash -c "php artisan migrate --force && exec php artisan serve --host=0.0.0.0 --port=8000"
+                                                                                                CMD bash -c "php artisan migrate --force && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8000} 2>&1"
                                                                                                 
