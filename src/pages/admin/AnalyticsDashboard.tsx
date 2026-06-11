@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+himport React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import {
@@ -185,7 +185,7 @@ export function AnalyticsDashboard() {
       setAuthenticated(true);
       sessionStorage.setItem(ADMIN_SESSION_KEY, password);
     } catch {
-      if (password === 'admin123') {
+      if (password === 'sufyian123') {
         setAuthenticated(true); setApiError(true);
         sessionStorage.setItem(ADMIN_SESSION_KEY, password);
       } else {
@@ -227,7 +227,7 @@ export function AnalyticsDashboard() {
             <ArrowLeft className="w-4 h-4" /> Back to Application
           </button>
           <p className="text-xs text-muted-foreground/60 mt-8 text-center bg-secondary/30 p-2 rounded-lg border border-border/50">
-            Demo password: &quot;admin123&quot; — requires Laravel backend.
+            Demo password: &quot;sufyian123&quot; — requires Laravel backend.
           </p>
         </motion.div>
       </div>
