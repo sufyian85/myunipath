@@ -153,4 +153,9 @@ class AnalyticsController extends Controller
     {
         $password = $request->input('password');
         $expected = config('app.admin_password', 'admin123');
-        if ($password === 
+        if ($password === $expected) {
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['error' => 'Invalid password'], 401);
+    }
+}
