@@ -1,0 +1,26 @@
+<svg viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CCI - College of Informatics and Computing, UNITEN">
+  <defs>
+    <clipPath id="globe-clip">
+      <circle cx="26" cy="43" r="22"/>
+    </clipPath>
+    <clipPath id="mini-u">
+      <circle cx="207" cy="11" r="9"/>
+    </clipPath>
+  </defs>
+  <text x="52" y="10" font-family="'Segoe UI',Arial,sans-serif" font-size="7" fill="#666" letter-spacing="0.3">The Energy University</text>
+  <circle cx="26" cy="43" r="22" fill="#CC2A1A"/>
+  <ellipse cx="26" cy="43" rx="9" ry="22" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" clip-path="url(#globe-clip)"/>
+  <line x1="4" y1="34" x2="48" y2="34" stroke="rgba(255,255,255,0.35)" stroke-width="1" clip-path="url(#globe-clip)"/>
+  <line x1="4" y1="43" x2="48" y2="43" stroke="rgba(255,255,255,0.45)" stroke-width="1.2" clip-path="url(#globe-clip)"/>
+  <line x1="4" y1="52" x2="48" y2="52" stroke="rgba(255,255,255,0.35)" stroke-width="1" clip-path="url(#globe-clip)"/>
+  <circle cx="26" cy="43" r="22" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+  <circle cx="207" cy="11" r="10" fill="white" stroke="#0F3361" stroke-width="0.8"/>
+  <rect x="198" y="2" width="18" height="9" fill="#B0B8C4" clip-path="url(#mini-u)"/>
+  <rect x="198" y="11" width="18" height="9" fill="#0F3361" clip-path="url(#mini-u)"/>
+  <rect x="198" y="12.5" width="18" height="2.5" fill="#CC2A1A" clip-path="url(#mini-u)"/>
+  <rect x="198" y="16" width="18" height="1.5" fill="#071830" clip-path="url(#mini-u)"/>
+  <rect x="198" y="18" width="18" height="3" fill="#CC2A1A" clip-path="url(#mini-u)"/>
+  <text x="55" y="53" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-size="36" font-weight="900" fill="#0F3361" letter-spacing="-1">CCI</text>
+  <text x="52" y="65" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="9" font-weight="600" fill="#0F3361" letter-spacing="0.1">College of Informatics and Computing</text>
+  <text x="52" y="76" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="8" font-weight="400" fill="#CC2A1A" font-style="italic" letter-spacing="0.2">Creation, Innovation &amp; Enterprise</text>
+</svg>
