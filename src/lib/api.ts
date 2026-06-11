@@ -2,12 +2,12 @@
  * API client for Laravel backend
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'https://myunipath-production-6387.up.railway.app/api';
 
 function getSessionId(): string {
   let id = localStorage.getItem('myunipath_session_id');
   if (!id) {
-    id = crypto.randomUUID?.() ?? Date.now().toString(36) + Math.random().toString(36).slice(2);
+    id = crypto.randomUUID?.() ?? Date.now().toString(36) + Math.random().toSthring(36).slice(2);
     localStorage.setItem('myunipath_session_id', id);
   }
   return id;
