@@ -132,7 +132,7 @@ export function AnalyticsDashboard() {
     if (authenticated && password) {
       setLoading(true);
       api.getAnalytics(password)
-        .then((data) => setAnalytics({ ...EMPTY, ...data }))
+        .then((data) => { setAnalytics({ ...EMPTY, ...data }); setApiError(false); })
         .catch(() => setApiError(true))
         .finally(() => setLoading(false));
     }
@@ -186,7 +186,7 @@ export function AnalyticsDashboard() {
       sessionStorage.setItem(ADMIN_SESSION_KEY, password);
     } catch {
       if (password === 'sufyian123') {
-        setAuthenticated(true); setApiError(true);
+        setAuthenticated(true);
         sessionStorage.setItem(ADMIN_SESSION_KEY, password);
       } else {
         setAuthError(true);
