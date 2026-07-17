@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import {
   ArrowLeft, Users, TrendingUp, Lock, BarChart3, Settings2,
-  School, Target, Zap, Award, CheckCircle2, BookOpen,
+  School, Target, Zap, Award, CheckCircle2, BookOpen, Trash2,
 } from 'lucide-react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -127,6 +127,7 @@ export function AnalyticsDashboard() {
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState(false);
   const [activeTab, setActiveTab] = useState<'analytics' | 'users' | 'rules'>('analytics');
+  const [resetting, setResetting] = useState(false);
 
   useEffect(() => {
     if (authenticated && password) {
@@ -138,7 +139,21 @@ export function AnalyticsDashboard() {
     }
   }, [authenticated, password]);
 
-  const programChartData = useMemo(() =>
+  const handleResetQuizData = async () => {
+    if (!window.confirm('This will permanently delete ALL quiz completion records (programme breakdown, participant counts). Student accounts are not affected.\n\nAre you sure?')) return;
+    setResetting(true);
+    try {
+      await api.resetQuizData(password);
+      const data = await api.getAnalytics(password);
+      setAnalytics({ ...EMPTY, ...data });
+    } catch {
+      alert('Failed to reset quiz data. Check your connection.');
+    } finally {
+      setResetting(false);
+    }
+  };
+
+    const programChartData = useMemo(() =>
     Object.entries(analytics.programCounts)
       .filter(([id]) => !!PROGRAM_DATA[id])
       .map(([id, count]) => ({ name: PROGRAM_DATA[id]?.name ?? id, value: count, color: PROGRAM_COLORS[id] ?? '#6366f1' }))
@@ -303,7 +318,17 @@ export function AnalyticsDashboard() {
 
             {/* ── Overview KPIs ── */}
             <section className="mb-8">
-              <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-4">Overview</h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">Overview</h2>
+                <button
+                  onClick={handleResetQuizData}
+                  disabled={resetting}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-destructive border border-destructive/30 hover:bg-destructive/10 transition-colors disabled:opacity-50"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  {resetting ? 'Clearing…' : 'Reset Quiz Data'}
+                </button>
+              </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <StatCard label="Quiz Participants" value={analytics.totalParticipants.toLocaleString()} sub="Unique sessions completed"
                   icon={<Target className="w-6 h-6 text-primary" />} accent="bg-primary/10 border-primary/20" delay={0} />
