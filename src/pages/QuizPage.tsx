@@ -146,34 +146,33 @@ function MascotCorner({ qIndex, streak }: { qIndex: number; streak: number }) {
   return (
     <motion.div
       key={qIndex}
-      initial={{ opacity: 0, y: 20, scale: 0.85 }}
-      animate={{ opacity: 1, x: 0, scale: 1 }}
-      exit={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-[220px]"
+      className="w-full mb-4"
     >
       <div
-        className="rounded-2xl px-4 py-3 shadow-2xl border backdrop-blur-md"
-        style={{ background: 'rgba(8,12,20,0.9)', borderColor: mascot.color + '60' }}
+        className="flex items-center gap-3 rounded-2xl px-4 py-2.5 border backdrop-blur-md"
+        style={{ background: 'rgba(8,12,20,0.7)', borderColor: mascot.color + '50' }}
       >
-        <motion.div
-          animate={{ y: [0, -5, 0] }}
+        <motion.span
+          animate={{ y: [0, -4, 0] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-          className="text-3xl text-center mb-2"
+          className="text-2xl flex-shrink-0"
         >
           {mascot.emoji}
-        </motion.div>
-        <p className="text-white/90 text-xs leading-snug text-center">{mascot.msg}</p>
+        </motion.span>
+        <p className="text-white/80 text-xs leading-snug flex-1">{mascot.msg}</p>
         {streak >= 2 && (
-          <p className="text-center text-xs font-black mt-1.5" style={{ color: '#f59e0b' }}>
-            🔥 {streak} streak!
-          </p>
+          <span className="text-xs font-black flex-shrink-0" style={{ color: '#f59e0b' }}>
+            🔥 {streak}x
+          </span>
         )}
       </div>
     </motion.div>
   );
 }
-
 function MilestonePop({ show, text }: { show: boolean; text: string }) {
   return (
     <AnimatePresence>
@@ -543,6 +542,11 @@ export function QuizPage() {
               </p>
             </div>
 
+            {/* ── MASCOT HINT STRIP ─────────────────────────────────────── */}
+            <AnimatePresence>
+              <MascotCorner qIndex={currentQ} streak={streak} />
+            </AnimatePresence>
+
             {/* Error banner */}
             {error && (
               <div className="mb-4 p-4 rounded-xl text-sm font-medium border-l-4 border-red-500 bg-red-500/10 text-red-300">
@@ -675,11 +679,6 @@ export function QuizPage() {
           )}
         </AnimatePresence>
       </main>
-
-      {/* ── FLOATING MASCOT ──────────────────────────────────────────────── */}
-      <AnimatePresence>
-        <MascotCorner qIndex={currentQ} streak={streak} />
-      </AnimatePresence>
 
       {/* ── AMBIENT GLOWS ────────────────────────────────────────────────── */}
       <div className="fixed inset-0 pointer-events-none z-0">
