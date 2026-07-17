@@ -207,7 +207,13 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
     }),
 
-  updateXp: (data: { xp_earned: number; best_combo?: number }) =>
+  resetQuizData: (adminPassword: string) =>
+    fetchApi<{ success: boolean }>('/admin/quiz-completions', {
+      method: 'DELETE',
+      headers: { 'X-Admin-Password': adminPassword },
+    }),
+
+    updateXp: (data: { xp_earned: number; best_combo?: number }) =>
     fetchApi<{ success: boolean; xp: number; level: number; quiz_count: number; best_combo: number; leveled_up: boolean }>('/students/me/xp', {
       method: 'POST',
       body: JSON.stringify(data),
