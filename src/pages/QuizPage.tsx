@@ -321,6 +321,7 @@ export function QuizPage() {
 
     // Delay then advance
     setTimeout(() => {
+      selectingRef.current = false; // release guard after delay
       handleAdvance(option);
     }, 900);
   };
