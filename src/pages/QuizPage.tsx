@@ -236,6 +236,7 @@ export function QuizPage() {
   const [milestoneText, setMilestoneText] = useState('');
   const localXpRef = useRef(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const selectingRef = useRef(false); // synchronous rapid-click guard
 
   // ── Auth guard ─────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -299,7 +300,8 @@ export function QuizPage() {
 
   // ── Answer selection → auto-advance ───────────────────────────────────────
   const handleSelect = (idx: number) => {
-    if (locked || submitting) return;
+    if (selectingRef.current || locked || submitting) return;
+    selectingRef.current = true; // synchronous guard — prevents rapid double-clicks
     setSelectedIdx(idx);
     setLocked(true);
     stopTimer();
