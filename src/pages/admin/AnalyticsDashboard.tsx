@@ -353,7 +353,7 @@ export function AnalyticsDashboard() {
                         <XAxis type="number" stroke="hsl(var(--muted-foreground))" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }} />
                         <YAxis type="category" dataKey="name" width={130} tick={{ fontSize: 11, fill: 'hsl(var(--foreground))' }} />
                         <Tooltip {...CHART_TOOLTIP_STYLE} cursor={{ fill: 'hsl(var(--secondary))' }} />
-                        <Bar dataKey="value" radius={[0, 6, 6, 0]} name="Students">
+                        <Bar dataKey="value" radius={[0, 6, 6, 0]} name="Students" isAnimationActive={false}>
                           {programChartData.map((e, i) => <Cell key={i} fill={e.color} />)}
                         </Bar>
                       </BarChart>
@@ -368,7 +368,7 @@ export function AnalyticsDashboard() {
                         <PolarGrid stroke="hsl(var(--border))" />
                         <PolarAngleAxis dataKey="subject" tick={{ fill: 'hsl(var(--foreground))', fontSize: 11 }} />
                         <PolarRadiusAxis stroke="hsl(var(--border))" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 9 }} />
-                        <Radar name="Students" dataKey="value" stroke="#2563eb" fill="#2563eb" fillOpacity={0.25} />
+                        <Radar name="Students" dataKey="value" stroke="#2563eb" fill="#2563eb" fillOpacity={0.25} isAnimationActive={false} />
                         <Tooltip {...CHART_TOOLTIP_STYLE} />
                       </RadarChart>
                     </ResponsiveContainer>
@@ -385,7 +385,7 @@ export function AnalyticsDashboard() {
                   <div className="flex flex-col md:flex-row items-center gap-6">
                     <ResponsiveContainer width={220} height={220}>
                       <PieChart>
-                        <Pie data={personaChartData} cx="50%" cy="50%" outerRadius={80} dataKey="value" strokeWidth={2} stroke="hsl(var(--card))">
+                        <Pie data={personaChartData} cx="50%" cy="50%" outerRadius={80} dataKey="value" strokeWidth={2} stroke="hsl(var(--card))" isAnimationActive={false}>
                           {personaChartData.map((e, i) => <Cell key={i} fill={e.color} />)}
                         </Pie>
                         <Tooltip {...CHART_TOOLTIP_STYLE} />
@@ -428,7 +428,7 @@ export function AnalyticsDashboard() {
                           <XAxis type="number" stroke="hsl(var(--muted-foreground))" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }} allowDecimals={false} />
                           <YAxis type="category" dataKey="name" width={140} tick={{ fontSize: 10, fill: 'hsl(var(--foreground))' }} />
                           <Tooltip {...CHART_TOOLTIP_STYLE} cursor={{ fill: 'hsl(var(--secondary))' }} />
-                          <Bar dataKey="value" fill="#0F3361" radius={[0, 6, 6, 0]} name="Students" />
+                          <Bar dataKey="value" fill="#0F3361" radius={[0, 6, 6, 0]} name="Students" isAnimationActive={false} />
                         </BarChart>
                       </ResponsiveContainer>
                       <div className="mt-4 space-y-1">
@@ -454,7 +454,7 @@ export function AnalyticsDashboard() {
                           <XAxis dataKey="name" tick={{ fontSize: 11, fill: 'hsl(var(--foreground))' }} />
                           <YAxis tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} allowDecimals={false} />
                           <Tooltip {...CHART_TOOLTIP_STYLE} />
-                          <Bar dataKey="value" fill="#e34628" radius={[4, 4, 0, 0]} name="Students" />
+                          <Bar dataKey="value" fill="#e34628" radius={[4, 4, 0, 0]} name="Students" isAnimationActive={false} />
                         </BarChart>
                       </ResponsiveContainer>
                     ) : <EmptyChart height={150} />}
@@ -505,8 +505,8 @@ export function AnalyticsDashboard() {
                       <YAxis tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} allowDecimals={false} />
                       <Tooltip {...CHART_TOOLTIP_STYLE} />
                       <Legend wrapperStyle={{ fontSize: 12 }} />
-                      <Area type="monotone" dataKey="Registrations" stroke="#0F3361" fill="url(#gradReg)" strokeWidth={2} dot={{ r: 3 }} />
-                      <Area type="monotone" dataKey="Quiz Completions" stroke="#e34628" fill="url(#gradComp)" strokeWidth={2} dot={{ r: 3 }} />
+                      <Area type="monotone" dataKey="Registrations" stroke="#0F3361" fill="url(#gradReg)" strokeWidth={2} dot={{ r: 3 }} isAnimationActive={false} />
+                      <Area type="monotone" dataKey="Quiz Completions" stroke="#e34628" fill="url(#gradComp)" strokeWidth={2} dot={{ r: 3 }} isAnimationActive={false} />
                     </AreaChart>
                   </ResponsiveContainer>
                 ) : <EmptyChart label="No trend data in the last 30 days." />}
@@ -525,7 +525,7 @@ export function AnalyticsDashboard() {
                         <XAxis dataKey="name" tick={{ fontSize: 11, fill: 'hsl(var(--foreground))' }} />
                         <YAxis tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} allowDecimals={false} />
                         <Tooltip {...CHART_TOOLTIP_STYLE} />
-                        <Bar dataKey="value" radius={[4, 4, 0, 0]} name="Students">
+                        <Bar dataKey="value" radius={[4, 4, 0, 0]} name="Students" isAnimationActive={false}>
                           {levelData.map((_, i) => (
                             <Cell key={i} fill={['#94a3b8', '#60a5fa', '#34d399', '#f59e0b', '#a78bfa'][i] ?? '#6366f1'} />
                           ))}
