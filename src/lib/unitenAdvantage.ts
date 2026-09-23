@@ -5,7 +5,7 @@
  *
  * Each persona maps to a set of personalised proof cards that explain *why*
  * UNITEN CCI is a good fit for that type of learner — not generic marketing,
- * but evidence tied to the student's character.
+ * but evidence tied to the student\'s character.
  *
  * CONTENT INTEGRITY RULES (for whoever maintains this file):
  *  • Do NOT promise a certification unless it is currently offered.
@@ -82,7 +82,7 @@ export const UNITEN_ADVANTAGE: Record<ProgramId, UnitenAdvantage> = {
     opener: 'You build things. UNITEN gives you the materials.',
     intro:
       'Code Architects thrive when they can move from concept to working product fast. ' +
-      'CCI's Software Engineering programme is structured around exactly that — real projects, ' +
+      'CCI\'s Software Engineering programme is structured around exactly that — real projects, ' +
       'industry-reviewed modules, and electives that let you go deep into the stack you care about.',
     proofCards: [
       {
@@ -177,7 +177,7 @@ export const UNITEN_ADVANTAGE: Record<ProgramId, UnitenAdvantage> = {
     opener: 'You see the world in design. UNITEN helps you build it.',
     intro:
       'Pixel Maestros need a programme that treats creativity as a technical skill, not an afterthought. ' +
-      'CCI's Graphics & Multimedia programme blends design thinking with the technical tools that ' +
+      'CCI\'s Graphics & Multimedia programme blends design thinking with the technical tools that ' +
       'studios, agencies, and game companies actually hire for.',
     proofCards: [
       {
@@ -271,7 +271,7 @@ export const UNITEN_ADVANTAGE: Record<ProgramId, UnitenAdvantage> = {
     opener: 'You think like an attacker. UNITEN trains you to defend.',
     intro:
       'Cyber Sentinels need more than theory — they need labs, adversarial thinking, and credentials ' +
-      'that prove their skills under pressure. CCI's Cybersecurity programme is built around exactly that, ' +
+      'that prove their skills under pressure. CCI\'s Cybersecurity programme is built around exactly that, ' +
       'with hands-on defence and ethical hacking work baked into the curriculum.',
     proofCards: [
       {
@@ -326,7 +326,7 @@ export const UNITEN_ADVANTAGE: Record<ProgramId, UnitenAdvantage> = {
         icon: '🕵️',
         title: 'Cybersecurity Career Pathways',
         why:
-          'Malaysia's cybersecurity talent gap is growing. Graduates enter roles as security analysts, ' +
+          'Malaysia\'s cybersecurity talent gap is growing. Graduates enter roles as security analysts, ' +
           'ethical hackers, forensics investigators, and security consultants — often with above-average ' +
           'starting salaries in the ICT sector.',
         where: 'UNITEN Career Services / CCI Alumni Network',
@@ -368,7 +368,7 @@ export const UNITEN_ADVANTAGE: Record<ProgramId, UnitenAdvantage> = {
     opener: 'You ask "what if machines could do this?" UNITEN helps you find out.',
     intro:
       'AI Pioneers need a programme that takes the maths seriously while keeping pace with how fast ' +
-      'the field moves. CCI's AI programme covers the fundamentals deeply and adds cloud-integrated ' +
+      'the field moves. CCI\'s AI programme covers the fundamentals deeply and adds cloud-integrated ' +
       'and generative AI learning opportunities shaped by industry input.',
     proofCards: [
       {
@@ -389,7 +389,7 @@ export const UNITEN_ADVANTAGE: Record<ProgramId, UnitenAdvantage> = {
         icon: '✨',
         title: 'Generative AI & Large Language Model Topics',
         why:
-          'CCI's industry-guided review has introduced generative AI learning opportunities — ' +
+          'CCI\'s industry-guided review has introduced generative AI learning opportunities — ' +
           'the fastest-growing area in the field. This is where the jobs are being created right now.',
         where: 'Year 3 elective track — confirm current offerings with CCI',
         source: 'CCI Industry-Guided Curriculum Review',
@@ -424,7 +424,7 @@ export const UNITEN_ADVANTAGE: Record<ProgramId, UnitenAdvantage> = {
         title: 'AI/ML & Data Science Career Pathways',
         why:
           'AI engineers and data scientists are the most sought-after graduates in technology globally. ' +
-          'UNITEN's programme positions you for roles in tech companies, research labs, finance, and healthcare.',
+          'UNITEN\'s programme positions you for roles in tech companies, research labs, finance, and healthcare.',
         where: 'UNITEN Career Services / CCI Alumni Network',
         source: 'UNITEN Graduate Outcomes',
         lastVerified: 'September 2026',
@@ -464,7 +464,7 @@ export const UNITEN_ADVANTAGE: Record<ProgramId, UnitenAdvantage> = {
     opener: 'You see the story inside the numbers. UNITEN gives you the tools to tell it.',
     intro:
       'Data Oracles need a programme where analytics is not an add-on but the core skill. ' +
-      'CCI's Business Analytics programme uses industry tools — Alteryx, SAP, Google Cloud Data Analytics — ' +
+      'CCI\'s Business Analytics programme uses industry tools — Alteryx, SAP, Google Cloud Data Analytics — ' +
       'with real case studies, not textbook simulations.',
     proofCards: [
       {
@@ -531,7 +531,7 @@ export const UNITEN_ADVANTAGE: Record<ProgramId, UnitenAdvantage> = {
         title: 'Merit & Industry-Sponsored Scholarships',
         why:
           'The demand for analytics talent has made this field attractive to sponsors. ' +
-          'Check UNITEN's scholarship office for current bursaries — PTPTN applies to all eligible students.',
+          'Check UNITEN\'s scholarship office for current bursaries — PTPTN applies to all eligible students.',
         where: 'UNITEN Scholarship Office',
         source: 'uniten.edu.my/scholarship',
         lastVerified: 'September 2026',
@@ -560,7 +560,7 @@ export const UNITEN_ADVANTAGE: Record<ProgramId, UnitenAdvantage> = {
     opener: 'You keep the digital world running. UNITEN trains you to build it.',
     intro:
       'Network Titans need hands-on lab time with real equipment, not just simulations. ' +
-      'CCI's Systems & Networking programme is CCNA-aligned and extends into cloud infrastructure ' +
+      'CCI\'s Systems & Networking programme is CCNA-aligned and extends into cloud infrastructure ' +
       'and network security — because modern networks span both physical and cloud layers.',
     proofCards: [
       {
@@ -581,7 +581,7 @@ export const UNITEN_ADVANTAGE: Record<ProgramId, UnitenAdvantage> = {
         title: 'CCNA Certification Opportunity',
         why:
           'Cisco Certified Network Associate (CCNA) is the gold standard entry credential for ' +
-          'networking careers. CCI's curriculum is aligned to help you pursue this — confirm ' +
+          'networking careers. CCI\'s curriculum is aligned to help you pursue this — confirm ' +
           'current exam support with your programme coordinator.',
         where: 'Networking modules — Years 2–3',
         source: 'CCI Industry Certification Review — UNITEN Why Study Here',
