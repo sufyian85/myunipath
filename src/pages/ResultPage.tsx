@@ -9,6 +9,7 @@ import type { ProgramId } from '../lib/data';
 import { ConfettiEffect } from '../components/gamification/ConfettiEffect';
 import { LevelUpModal } from '../components/gamification/LevelUpModal';
 import { Footer } from '../components/Footer';
+import { UnitenAdvantage } from '../components/UnitenAdvantage';
 
 type Phase = 'scanning' | 'revealing' | 'done';
 
@@ -306,6 +307,15 @@ function CharacterCard({ char, xpEarned, streak, xpCountDisplayed, xpTotal, xpPr
               </motion.div>
             ))}
           </div>
+        </motion.div>
+
+        {/* ── Your UNITEN Advantage ──────────────────────────────────────────── */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.62 }}>
+          <UnitenAdvantage
+            personaId={char.id as import('../lib/data').ProgramId}
+            color={char.color}
+            delayBase={0.65}
+          />
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }}
