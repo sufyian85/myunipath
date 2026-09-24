@@ -157,10 +157,20 @@ tr:nth-child(even) td{background:#f5f7fa}
 <div class="hdr"><h1>MyUniPath — Student Export</h1>
 <p>UNITEN CCI &nbsp;|&nbsp; Generated: ${date} &nbsp;|&nbsp; Total: ${filteredUsers.length} students</p></div>
 <table><thead><tr>${headerCells}</tr></thead><tbody>${bodyRows}</tbody></table>
-<script>window.onload=()=>{window.print()}<\/script>
 </body></html>`;
-    const win = window.open('', '_blank');
-    if (win) { win.document.write(html); win.document.close(); }
+    // Use a hidden iframe instead of window.open() to avoid Chrome popup blocker
+    const iframe = document.createElement('iframe');
+    iframe.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;border:none;';
+    document.body.appendChild(iframe);
+    const doc = iframe.contentDocument as Document;
+    doc.open();
+    doc.write(html);
+    doc.close();
+    setTimeout(() => {
+      iframe.contentWindow?.focus();
+      iframe.contentWindow?.print();
+      setTimeout(() => { if (document.body.contains(iframe)) document.body.removeChild(iframe); }, 2000);
+    }, 300);
   };
 
   // ── Render ────────────────────────────────────────────────────────────────
