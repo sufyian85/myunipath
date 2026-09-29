@@ -16,6 +16,7 @@ import {
 import { api } from '../lib/api';
 import { XPPopup } from '../components/gamification/XPPopup';
 import { useQuizSounds, setSoundEnabled } from '../hooks/useQuizSounds';
+import { useHaptic } from '../hooks/useHaptic';
 
 // ─── Answer Card Config ────────────────────────────────────────────────────────
 const CARD_STYLES = [
@@ -237,6 +238,7 @@ export function QuizPage() {
     try { return localStorage.getItem('myunipath_sound_enabled') !== 'false'; } catch { return true; }
   });
   const sounds = useQuizSounds();
+  const haptic = useHaptic();
   const [showMilestone, setShowMilestone] = useState(false);
   const [milestoneText, setMilestoneText] = useState('');
   const localXpRef = useRef(0);
@@ -302,6 +304,7 @@ export function QuizPage() {
     if (selectingRef.current || locked || submitting) return;
     selectingRef.current = true; // synchronous guard — prevents rapid double-clicks
     sounds.playSelect();
+    haptic.tap();
     setSelectedIdx(idx);
     setLocked(true);
     stopTimer();
@@ -314,14 +317,14 @@ export function QuizPage() {
     localXpRef.current += questionXp;
 
     // Sound: speed bonus gets special sparkle, otherwise normal XP chime
-    if (mult >= 2) { sounds.playSpeedBonus(); }
-    else { setTimeout(() => sounds.playXp(), 120); }
+    if (mult >= 2) { sounds.playSpeedBonus(); haptic.speedBonus(); }
+    else { setTimeout(() => { sounds.playXp(); haptic.xp(); }, 120); }
 
     const newStreak = mult >= 1.5 ? streak + 1 : 0;
     setStreak(newStreak);
 
-    if (newStreak === 3) { triggerMilestone('🔥 3x Streak! +20 Bonus XP'); addXpEvent(20, '🔥 Streak Bonus!', 1); localXpRef.current += 20; sounds.playStreak(3); }
-    if (newStreak === 5) { triggerMilestone('⚡ 5x Streak! +50 Bonus XP'); addXpEvent(50, '⚡ Mega Streak!', 1); localXpRef.current += 50; sounds.playStreak(5); }
+    if (newStreak === 3) { triggerMilestone('🔥 3x Streak! +20 Bonus XP'); addXpEvent(20, '🔥 Streak Bonus!', 1); localXpRef.current += 20; sounds.playStreak(3); haptic.streak(3); }
+    if (newStreak === 5) { triggerMilestone('⚡ 5x Streak! +50 Bonus XP'); addXpEvent(50, '⚡ Mega Streak!', 1); localXpRef.current += 50; sounds.playStreak(5); haptic.streak(5); }
 
     // Delay then advance
     setTimeout(() => {
@@ -343,9 +346,9 @@ export function QuizPage() {
     if (!isLast) {
       if (currentQ + 1 === Math.floor(questions.length / 2)) {
         triggerMilestone('🎯 Halfway There! Keep Going!');
-        sounds.playHalfway();
+        sounds.playHalfway(); haptic.advance();
       } else {
-        sounds.playAdvance();
+        sounds.playAdvance(); haptic.advance();
       }
       setCurrentQ(q => q + 1);
       setSelectedIdx(null);
@@ -384,7 +387,7 @@ export function QuizPage() {
           });
         } catch { /* non-critical */ }
 
-        sounds.playComplete();
+        sounds.playComplete(); haptic.complete();
         navigate('/results', {
           state: {
             persona,
@@ -406,7 +409,7 @@ export function QuizPage() {
 
   const handleBack = () => {
     if (submitting) return;
-    sounds.playBack();
+    sounds.playBack(); haptic.back();
     if (currentQ > 0) {
       stopTimer();
       setCurrentQ(q => q - 1);
