@@ -241,9 +241,7 @@ export function AnalyticsDashboard() {
             className="w-full mt-6 flex justify-center items-center gap-2 text-muted-foreground hover:text-foreground text-sm transition-colors font-medium">
             <ArrowLeft className="w-4 h-4" /> Back to Application
           </button>
-          <p className="text-xs text-muted-foreground/60 mt-8 text-center bg-secondary/30 p-2 rounded-lg border border-border/50">
-            Demo password: &quot;sufyian123&quot; — requires Laravel backend.
-          </p>
+
         </motion.div>
       </div>
     );
