@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Zap, ChevronLeft, ArrowRight } from 'lucide-react';
+import { Zap, ChevronLeft, ArrowRight, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStudent } from '../context/StudentContext';
 import { useGamification } from '../context/GamificationContext';
@@ -15,6 +15,7 @@ import {
 } from '../lib/recommendationEngine';
 import { api } from '../lib/api';
 import { XPPopup } from '../components/gamification/XPPopup';
+import { useQuizSounds, setSoundEnabled } from '../hooks/useQuizSounds';
 
 // ─── Answer Card Config ────────────────────────────────────────────────────────
 const CARD_STYLES = [
@@ -232,6 +233,10 @@ export function QuizPage() {
   // Gamification
   const [timeLeft, setTimeLeft] = useState(TIMER_SECONDS);
   const [streak, setStreak] = useState(0);
+  const [soundOn, setSoundOn] = useState<boolean>(() => {
+    try { return localStorage.getItem('myunipath_sound_enabled') !== 'false'; } catch { return true; }
+  });
+  const sounds = useQuizSounds();
   const [showMilestone, setShowMilestone] = useState(false);
   const [milestoneText, setMilestoneText] = useState('');
   const localXpRef = useRef(0);
@@ -296,6 +301,7 @@ export function QuizPage() {
   const handleSelect = (idx: number) => {
     if (selectingRef.current || locked || submitting) return;
     selectingRef.current = true; // synchronous guard — prevents rapid double-clicks
+    sounds.playSelect();
     setSelectedIdx(idx);
     setLocked(true);
     stopTimer();
@@ -307,11 +313,15 @@ export function QuizPage() {
     addXpEvent(XP_PER_QUESTION, label, mult);
     localXpRef.current += questionXp;
 
+    // Sound: speed bonus gets special sparkle, otherwise normal XP chime
+    if (mult >= 2) { sounds.playSpeedBonus(); }
+    else { setTimeout(() => sounds.playXp(), 120); }
+
     const newStreak = mult >= 1.5 ? streak + 1 : 0;
     setStreak(newStreak);
 
-    if (newStreak === 3) { triggerMilestone('🔥 3x Streak! +20 Bonus XP'); addXpEvent(20, '🔥 Streak Bonus!', 1); localXpRef.current += 20; }
-    if (newStreak === 5) { triggerMilestone('⚡ 5x Streak! +50 Bonus XP'); addXpEvent(50, '⚡ Mega Streak!', 1); localXpRef.current += 50; }
+    if (newStreak === 3) { triggerMilestone('🔥 3x Streak! +20 Bonus XP'); addXpEvent(20, '🔥 Streak Bonus!', 1); localXpRef.current += 20; sounds.playStreak(3); }
+    if (newStreak === 5) { triggerMilestone('⚡ 5x Streak! +50 Bonus XP'); addXpEvent(50, '⚡ Mega Streak!', 1); localXpRef.current += 50; sounds.playStreak(5); }
 
     // Delay then advance
     setTimeout(() => {
@@ -333,6 +343,9 @@ export function QuizPage() {
     if (!isLast) {
       if (currentQ + 1 === Math.floor(questions.length / 2)) {
         triggerMilestone('🎯 Halfway There! Keep Going!');
+        sounds.playHalfway();
+      } else {
+        sounds.playAdvance();
       }
       setCurrentQ(q => q + 1);
       setSelectedIdx(null);
@@ -371,6 +384,7 @@ export function QuizPage() {
           });
         } catch { /* non-critical */ }
 
+        sounds.playComplete();
         navigate('/results', {
           state: {
             persona,
@@ -392,6 +406,7 @@ export function QuizPage() {
 
   const handleBack = () => {
     if (submitting) return;
+    sounds.playBack();
     if (currentQ > 0) {
       stopTimer();
       setCurrentQ(q => q - 1);
@@ -464,15 +479,31 @@ export function QuizPage() {
       {/* ── TOP HEADER ──────────────────────────────────────────────────── */}
       <header className="relative z-20 flex items-center justify-between px-6 py-4">
         {/* Back */}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleBack}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 hover:border-white/50 text-white font-bold text-sm transition-all shadow-sm"
-        >
-          <ChevronLeft className="w-4 h-4" />
-          Back
-        </motion.button>
+        <div className="flex items-center gap-2">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleBack}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 hover:border-white/50 text-white font-bold text-sm transition-all shadow-sm"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Back
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              const next = !soundOn;
+              setSoundOn(next);
+              setSoundEnabled(next);
+              if (next) sounds.playSelect();
+            }}
+            className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 hover:border-white/50 text-white transition-all shadow-sm"
+            title={soundOn ? 'Mute sounds' : 'Unmute sounds'}
+          >
+            {soundOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+          </motion.button>
+        </div>
 
         {/* Logo */}
         <div className="flex items-center gap-2">
