@@ -37,6 +37,15 @@ const PERSONA_LABELS: Record<string, string> = {
   'systems-networking': 'Network Titan',
 };
 
+const PROGRAM_SHORT: Record<string, string> = {
+  'software-engineering': 'Software Engineering',
+  'graphics-multimedia': 'Graphics & Multimedia',
+  'cybersecurity': 'Cyber Security',
+  'artificial-intelligence': 'Artificial Intelligence',
+  'business-analytics': 'Business Analytics',
+  'systems-networking': 'Systems & Networking',
+};
+
 const CHART_TOOLTIP_STYLE = {
   contentStyle: {
     backgroundColor: 'hsl(var(--card))',
@@ -156,7 +165,7 @@ export function AnalyticsDashboard() {
     const programChartData = useMemo(() =>
     Object.entries(analytics.programCounts)
       .filter(([id]) => !!PROGRAM_DATA[id])
-      .map(([id, count]) => ({ name: PROGRAM_DATA[id]?.name ?? id, value: count, color: PROGRAM_COLORS[id] ?? '#6366f1' }))
+      .map(([id, count]) => ({ name: PROGRAM_SHORT[id] ?? PROGRAM_DATA[id]?.name ?? id, value: count, color: PROGRAM_COLORS[id] ?? '#6366f1' }))
       .sort((a, b) => b.value - a.value),
     [analytics.programCounts]);
 
@@ -185,7 +194,7 @@ export function AnalyticsDashboard() {
   const radarData = useMemo(() =>
     Object.entries(analytics.programCounts)
       .filter(([id]) => !!PROGRAM_DATA[id])
-      .map(([id, count]) => ({ subject: PROGRAM_DATA[id]?.name?.split(' ')[0] ?? id, value: count })),
+      .map(([id, count]) => ({ subject: PROGRAM_SHORT[id] ?? id, value: count, fullName: PROGRAM_DATA[id]?.name ?? id })),
     [analytics.programCounts]);
 
   const levelData = useMemo(() =>
@@ -345,11 +354,11 @@ export function AnalyticsDashboard() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <ChartCard title="Recommended Programme Breakdown" delay={0.2}>
                   {programChartData.length > 0 ? (
-                    <ResponsiveContainer width="100%" height={260}>
-                      <BarChart data={programChartData} layout="vertical" margin={{ left: 10, right: 20 }}>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={programChartData} layout="vertical" margin={{ left: 10, right: 30 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" horizontal={false} />
                         <XAxis type="number" stroke="hsl(var(--muted-foreground))" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }} />
-                        <YAxis type="category" dataKey="name" width={130} tick={{ fontSize: 11, fill: 'hsl(var(--foreground))' }} />
+                        <YAxis type="category" dataKey="name" width={165} tick={{ fontSize: 11, fill: 'hsl(var(--foreground))' }} />
                         <Tooltip {...CHART_TOOLTIP_STYLE} cursor={{ fill: 'hsl(var(--secondary))' }} />
                         <Bar dataKey="value" radius={[0, 6, 6, 0]} name="Students" isAnimationActive={false}>
                           {programChartData.map((e, i) => <Cell key={i} fill={e.color} />)}
@@ -361,13 +370,13 @@ export function AnalyticsDashboard() {
 
                 <ChartCard title="Programme Interest Radar" delay={0.25}>
                   {radarData.length > 0 ? (
-                    <ResponsiveContainer width="100%" height={260}>
-                      <RadarChart data={radarData}>
+                    <ResponsiveContainer width="100%" height={280}>
+                      <RadarChart data={radarData} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
                         <PolarGrid stroke="hsl(var(--border))" />
-                        <PolarAngleAxis dataKey="subject" tick={{ fill: 'hsl(var(--foreground))', fontSize: 11 }} />
+                        <PolarAngleAxis dataKey="subject" tick={{ fill: 'hsl(var(--foreground))', fontSize: 10, fontWeight: 500 }} />
                         <PolarRadiusAxis stroke="hsl(var(--border))" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 9 }} />
                         <Radar name="Students" dataKey="value" stroke="#2563eb" fill="#2563eb" fillOpacity={0.25} isAnimationActive={false} />
-                        <Tooltip {...CHART_TOOLTIP_STYLE} />
+                        <Tooltip {...CHART_TOOLTIP_STYLE} formatter={(value: number, _: string, props: { payload?: { fullName?: string } }) => [value + ' students', props.payload?.fullName ?? 'Programme']} />
                       </RadarChart>
                     </ResponsiveContainer>
                   ) : <EmptyChart />}
