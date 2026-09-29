@@ -282,14 +282,8 @@ export function QuizPage() {
     return stopTimer;
   }, [questionsLoaded, currentQ, startTimer, stopTimer]);
 
-  // Auto-skip on timer expiry
-  useEffect(() => {
-    if (timeLeft === 0 && selectedIdx === null && questionsLoaded) {
-      // Pick a random option to keep quiz flowing (or just skip with no XP)
-      handleAdvance(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeLeft]);
+  // Timer is decorative — shows XP multiplier incentive but does NOT auto-advance.
+  // Students must manually select an answer regardless of how much time remains.
 
   // ── Milestone ─────────────────────────────────────────────────────────────
   const triggerMilestone = useCallback((text: string) => {
@@ -471,10 +465,10 @@ export function QuizPage() {
       <header className="relative z-20 flex items-center justify-between px-6 py-4">
         {/* Back */}
         <motion.button
-          whileHover={{ scale: 1.08 }}
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleBack}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition-all text-sm font-medium"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 hover:border-white/50 text-white font-bold text-sm transition-all shadow-sm"
         >
           <ChevronLeft className="w-4 h-4" />
           Back
@@ -653,17 +647,7 @@ export function QuizPage() {
               )}
             </AnimatePresence>
 
-            {/* Manual next (visible only when not auto-advancing, for accessibility) */}
-            {!locked && selectedIdx === null && timeLeft <= 5 && (
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                onClick={() => handleAdvance(null)}
-                className="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-xl text-white/60 hover:text-white border border-white/10 hover:border-white/30 transition-all text-sm"
-              >
-                Skip <ArrowRight className="w-4 h-4" />
-              </motion.button>
-            )}
+            {/* Skip button removed — timer is decorative, user must select an answer */}
           </motion.div>
         </AnimatePresence>
 
